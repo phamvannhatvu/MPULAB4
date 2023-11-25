@@ -31,9 +31,6 @@ typedef struct
 	uint8_t runMe;
 } sTask;
 
-extern uint8_t numOfTasks;
-extern sTask SCH_tasks_G[SCH_MAX_TASKS];
-
 void SCH_Init(void);
 void SCH_Update(void);
 void SCH_Delete_Task(uint8_t);

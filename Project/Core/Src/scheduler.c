@@ -6,10 +6,10 @@
  */
 
 #include "scheduler.h"
-#include "stdio.h"
 
 sTask SCH_tasks_G[SCH_MAX_TASKS];
 uint8_t numOfTasks = 0;
+uint32_t jitterTimes = 0;
 
 void Timer_Init()
 {
@@ -41,6 +41,10 @@ void SCH_Update(void)
 	if (SCH_tasks_G[0].delay > 0)
 	{
 		--SCH_tasks_G[0].delay;
+	}else
+	{
+		// number of time the tasks are "jitter" because of a long task
+		++jitterTimes;
 	}
 }
 
@@ -69,17 +73,35 @@ void SCH_Delete_Task(uint8_t index)
 
 void SCH_Dispatch_Tasks(void)
 {
-	while (numOfTasks > 0 && SCH_tasks_G[0].delay == 0)
+	do
 	{
-		// Run the task
-		(*SCH_tasks_G[0].pTask)();
-		if (SCH_tasks_G[0].period > 0)
+		while (numOfTasks > 0 && SCH_tasks_G[0].delay == 0)
 		{
-			SCH_Add_Task(SCH_tasks_G[0].pTask, SCH_tasks_G[0].period * TICK_DURATION,
-					SCH_tasks_G[0].period * TICK_DURATION);
+			// Run the task
+			(*SCH_tasks_G[0].pTask)();
+			if (SCH_tasks_G[0].period > 0)
+			{
+				SCH_Add_Task(SCH_tasks_G[0].pTask, SCH_tasks_G[0].period * TICK_DURATION,
+						SCH_tasks_G[0].period * TICK_DURATION);
+			}
+			SCH_Delete_Task(0);
 		}
-		SCH_Delete_Task(0);
-	}
+		if (numOfTasks > 0)
+		{
+			for (uint8_t i = 0; i < numOfTasks; ++i)
+			{
+				if (jitterTimes > SCH_tasks_G[i].delay)
+				{
+					jitterTimes -= SCH_tasks_G[i].delay;
+				}else
+				{
+					SCH_tasks_G[i].delay -= jitterTimes;
+					jitterTimes = 0;
+					break;
+				}
+			}
+		}
+	}while (jitterTimes > 0 && numOfTasks > 0);
 //	char data[20];
 //	sprintf(data, "%d %d", SCH_tasks_G[0].runMe, SCH_tasks_G[1].delay);
 //	print_time(data);

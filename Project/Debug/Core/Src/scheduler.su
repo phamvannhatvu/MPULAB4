@@ -3,8 +3,8 @@
 ../Core/Src/scheduler.c:24:6:SCH_Go_To_Sleep	4	static
 ../Core/Src/scheduler.c:29:6:SCH_Init	16	static
 ../Core/Src/scheduler.c:39:6:SCH_Update	4	static
-../Core/Src/scheduler.c:47:6:SCH_Delete_Task	24	static
-../Core/Src/scheduler.c:70:6:SCH_Dispatch_Tasks	8	static
-../Core/Src/scheduler.c:92:6:SCH_Add_Task	32	static
-../Core/Src/scheduler.c:146:9:SCH_Find_Task	24	static
-../Core/Src/scheduler.c:160:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/scheduler.c:51:6:SCH_Delete_Task	24	static
+../Core/Src/scheduler.c:74:6:SCH_Dispatch_Tasks	16	static
+../Core/Src/scheduler.c:114:6:SCH_Add_Task	32	static
+../Core/Src/scheduler.c:168:9:SCH_Find_Task	24	static
+../Core/Src/scheduler.c:182:6:HAL_TIM_PeriodElapsedCallback	16	static

@@ -115,9 +115,9 @@ int main(void)
   SCH_Add_Task(LED1_blink, 0, 1000);
   SCH_Add_Task(LED15_blink, 0, 1500);
   SCH_Add_Task(LED2_blink, 0, 2000);
-  SCH_Add_Task(LED25_blink, 0, 2500);
-//  SCH_Add_Task(print10ms, 0, 10);
-//  SCH_Add_Task(print500ms, 2000, 500);
+  SCH_Add_Task(LED25_blink, 2000, 0);
+  SCH_Add_Task(print10ms, 2000, 10);
+  SCH_Add_Task(print500ms, 2000, 500);
   SCH_Add_Task(read_button, 0, 10);
 
   while (1)
@@ -325,10 +325,7 @@ void LED25_blink()
 
 void print10ms()
 {
-//	print_time("10ms");
-	char data[30];
-	sprintf(data, "%d %d", SCH_tasks_G[0].delay, SCH_tasks_G[1].delay);
-	print_time(data);
+	print_time("10ms");
 }
 
 void print500ms()

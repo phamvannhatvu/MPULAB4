@@ -9,6 +9,6 @@ main.c:308:6:LED15_blink	1
 main.c:314:6:LED2_blink	1
 main.c:320:6:LED25_blink	1
 main.c:326:6:print10ms	1
-main.c:334:6:print500ms	1
-main.c:339:6:print_time	1
-main.c:351:6:Error_Handler	1
+main.c:331:6:print500ms	1
+main.c:336:6:print_time	1
+main.c:348:6:Error_Handler	1
