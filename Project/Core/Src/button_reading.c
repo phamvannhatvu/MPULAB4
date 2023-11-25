@@ -12,7 +12,7 @@ GPIO_PinState prevBtnReadVal[2] = {RELEASED, RELEASED};
 GPIO_PinState buttonState = RELEASED;
 
 uint32_t pressedCounter = 0;
-uint8_t pToggleIndex = SCH_MAX_TASKS;
+uint8_t ledToggleTaskAdded = 0;
 
 void LED_BTN_toggle(void)
 {
@@ -32,11 +32,11 @@ void read_button(void)
 				HAL_GPIO_TogglePin(LED_BTN_GPIO_Port, LED_BTN_Pin);
 			}else
 			{
-				if (pToggleIndex != SCH_MAX_TASKS)
+				if (ledToggleTaskAdded == 1)
 				{
-					SCH_Delete_Task(pToggleIndex);
+					SCH_Delete_Task(SCH_Find_Task(LED_BTN_toggle));
+					ledToggleTaskAdded = 0;
 				}
-				pToggleIndex = SCH_MAX_TASKS;
 				pressedCounter = 0;
 			}
 		}else
@@ -47,9 +47,10 @@ void read_button(void)
 				++pressedCounter;
 				if (pressedCounter * TICK_DURATION >= 1000)
 				{
-					if (pToggleIndex == SCH_MAX_TASKS)
+					if (ledToggleTaskAdded == 0)
 					{
-						pToggleIndex = SCH_Add_Task(LED_BTN_toggle, 0, 500);
+						SCH_Add_Task(LED_BTN_toggle, 0, 500);
+						ledToggleTaskAdded = 1;
 					}
 				}
 			}

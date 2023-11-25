@@ -5,5 +5,6 @@ scheduler.c:27:6:SCH_Init	2
 scheduler.c:37:6:SCH_Update	5
 scheduler.c:61:6:SCH_Delete_Task	2
 scheduler.c:72:6:SCH_Dispatch_Tasks	4
-scheduler.c:93:9:SCH_Add_Task	4
-scheduler.c:113:6:HAL_TIM_PeriodElapsedCallback	2
+scheduler.c:93:6:SCH_Add_Task	4
+scheduler.c:110:9:SCH_Find_Task	3
+scheduler.c:124:6:HAL_TIM_PeriodElapsedCallback	2
