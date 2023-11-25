@@ -32,7 +32,7 @@ typedef struct
 void SCH_Init(void);
 void SCH_Update(void);
 void SCH_Delete_Task(uint8_t);
-void SCH_Add_Task(void (*)(void), uint32_t, uint32_t);
+uint8_t SCH_Add_Task(void (*)(void), uint32_t, uint32_t);
 void SCH_Dispatch_Tasks(void);
 
 

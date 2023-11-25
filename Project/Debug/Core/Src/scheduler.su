@@ -5,5 +5,5 @@
 ../Core/Src/scheduler.c:37:6:SCH_Update	16	static
 ../Core/Src/scheduler.c:61:6:SCH_Delete_Task	16	static
 ../Core/Src/scheduler.c:72:6:SCH_Dispatch_Tasks	16	static
-../Core/Src/scheduler.c:93:6:SCH_Add_Task	32	static
-../Core/Src/scheduler.c:109:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/scheduler.c:93:9:SCH_Add_Task	32	static
+../Core/Src/scheduler.c:113:6:HAL_TIM_PeriodElapsedCallback	16	static

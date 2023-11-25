@@ -89,8 +89,8 @@ void SCH_Dispatch_Tasks(void)
 	SCH_Go_To_Sleep();
 }
 
-
-void SCH_Add_Task(void (*pFunction)(void), uint32_t delay, uint32_t period)
+//Return value is the index of the newly added task
+uint8_t SCH_Add_Task(void (*pFunction)(void), uint32_t delay, uint32_t period)
 {
 	uint8_t index = 0;
 	while ((index < SCH_MAX_TASKS) && (SCH_tasks_G[index].pTask != 0))
@@ -103,7 +103,11 @@ void SCH_Add_Task(void (*pFunction)(void), uint32_t delay, uint32_t period)
 		SCH_tasks_G[index].delay = delay / TICK_DURATION;
 		SCH_tasks_G[index].period = period / TICK_DURATION;
 		SCH_tasks_G[index].runMe = 0;
+		return index;
 	}
+
+	//SCH_MAX_TASKS return value means the addition is failed
+	return SCH_MAX_TASKS;
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
