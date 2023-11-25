@@ -10,4 +10,6 @@
 
 extern TIM_HandleTypeDef htim2;
 extern uint32_t display_counter;
+void print_time(const char *msg);
+
 #endif /* INC_GLOBAL_H_ */

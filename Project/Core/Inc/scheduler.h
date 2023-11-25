@@ -13,21 +13,26 @@
 
 #define SCH_MAX_TASKS 10
 #define TICK_DURATION 10
+#define RUN_QUEUE_MAX_SIZE 10
 
 typedef struct
 {
 	// Pointer to the task
 	void (*pTask)(void);
 
-	// Delay (in ms) until the function will (next) be run
+	// Delay (in ticks) until the function will (next) be run (from when the
+	// preceding task will be executed)
 	uint32_t delay;
 
-	// Interval (in ms) between subsequent runs
+	// Interval (in ticks) between subsequent runs
 	uint32_t period;
 
 	// Incremented (by scheduler) when task is due to execute
 	uint8_t runMe;
 } sTask;
+
+extern uint8_t numOfTasks;
+extern sTask SCH_tasks_G[SCH_MAX_TASKS];
 
 void SCH_Init(void);
 void SCH_Update(void);
