@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "scheduler.h"
 #include "global.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -46,14 +47,7 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-void LED05_blink(void);
-void LED1_blink(void);
-void LED15_blink(void);
-void LED2_blink(void);
-void LED25_blink(void);
-
-void print10ms(void);
-void print500ms(void);
+uint32_t display_counter = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,7 +56,16 @@ static void MX_GPIO_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void LED05_blink(void);
+void LED1_blink(void);
+void LED15_blink(void);
+void LED2_blink(void);
+void LED25_blink(void);
 
+void print10ms(void);
+void print500ms(void);
+
+void print_time(const char *msg);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -107,13 +110,13 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   SCH_Init();
-  SCH_Add_Task(LED05_blink, 100, 500);
-  SCH_Add_Task(LED1_blink, 100, 1000);
-  SCH_Add_Task(LED15_blink, 100, 1500);
-  SCH_Add_Task(LED2_blink, 100, 2000);
-  SCH_Add_Task(LED25_blink, 100, 2500);
-  SCH_Add_Task(print10ms, 0, 10);
-  SCH_Add_Task(print500ms, 0, 500);
+  SCH_Add_Task(LED05_blink, 110, 500);
+  SCH_Add_Task(LED1_blink, 130, 1000);
+  SCH_Add_Task(LED15_blink, 170, 1500);
+  SCH_Add_Task(LED2_blink, 190, 2000);
+  SCH_Add_Task(LED25_blink, 230, 2500);
+  SCH_Add_Task(print10ms, 2000, 10);
+  SCH_Add_Task(print500ms, 2000, 500);
 
   while (1)
   {
@@ -274,36 +277,48 @@ static void MX_GPIO_Init(void)
 void LED05_blink()
 {
 	HAL_GPIO_TogglePin(LED05_GPIO_Port, LED05_Pin);
+	print_time("LED 0.5s");
 }
 
 void LED1_blink()
 {
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+	print_time("LED 1s");
 }
 
 void LED15_blink()
 {
 	HAL_GPIO_TogglePin(LED15_GPIO_Port, LED15_Pin);
+	print_time("LED 1.5s");
 }
 
 void LED2_blink()
 {
 	HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+	print_time("LED 2s");
 }
 
 void LED25_blink()
 {
 	HAL_GPIO_TogglePin(LED25_GPIO_Port, LED25_Pin);
+	print_time("LED 2.5s");
 }
 
 void print10ms()
 {
-
+	print_time("10ms");
 }
 
 void print500ms()
 {
+	print_time("500ms");
+}
 
+void print_time(const char *msg)
+{
+	char data[100];
+	uint8_t len = sprintf(data, "%s: %lu\r", msg, display_counter);
+	HAL_UART_Transmit(&huart1, (uint8_t*)data, len, 500);
 }
 /* USER CODE END 4 */
 
