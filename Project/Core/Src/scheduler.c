@@ -61,13 +61,11 @@ void SCH_Delete_Task(uint8_t index)
 			SCH_tasks_G[i].delay = SCH_tasks_G[i + 1].delay;
 			SCH_tasks_G[i].period = SCH_tasks_G[i + 1].period;
 			SCH_tasks_G[i].pTask = SCH_tasks_G[i + 1].pTask;
-			SCH_tasks_G[i].runMe = SCH_tasks_G[i + 1].runMe;
 		}
 		--numOfTasks;
 		SCH_tasks_G[numOfTasks].pTask = 0;
 		SCH_tasks_G[numOfTasks].delay = 0;
 		SCH_tasks_G[numOfTasks].period = 0;
-		SCH_tasks_G[numOfTasks].runMe = 0;
 	}
 }
 
@@ -75,6 +73,7 @@ void SCH_Dispatch_Tasks(void)
 {
 	do
 	{
+		// Execute the first tasks whose delay is zero (ready to be run)
 		while (numOfTasks > 0 && SCH_tasks_G[0].delay == 0)
 		{
 			// Run the task
@@ -86,6 +85,9 @@ void SCH_Dispatch_Tasks(void)
 			}
 			SCH_Delete_Task(0);
 		}
+
+		// Compensate the "jitter" times by reducing the "delay" attribute of
+		// the remaining tasks
 		if (numOfTasks > 0)
 		{
 			for (uint8_t i = 0; i < numOfTasks; ++i)
@@ -93,6 +95,7 @@ void SCH_Dispatch_Tasks(void)
 				if (jitterTimes > SCH_tasks_G[i].delay)
 				{
 					jitterTimes -= SCH_tasks_G[i].delay;
+					SCH_tasks_G[i].delay = 0;
 				}else
 				{
 					SCH_tasks_G[i].delay -= jitterTimes;
@@ -102,9 +105,6 @@ void SCH_Dispatch_Tasks(void)
 			}
 		}
 	}while (jitterTimes > 0 && numOfTasks > 0);
-//	char data[20];
-//	sprintf(data, "%d %d", SCH_tasks_G[0].runMe, SCH_tasks_G[1].delay);
-//	print_time(data);
 
 	SCH_Report_Status();
 	SCH_Go_To_Sleep();
@@ -150,7 +150,6 @@ void SCH_Add_Task(void (*pFunction)(void), uint32_t delay, uint32_t period)
 					SCH_tasks_G[i].delay = SCH_tasks_G[i - 1].delay;
 					SCH_tasks_G[i].period = SCH_tasks_G[i - 1].period;
 					SCH_tasks_G[i].pTask = SCH_tasks_G[i - 1].pTask;
-					SCH_tasks_G[i].runMe = SCH_tasks_G[i - 1].runMe;
 				}
 				SCH_tasks_G[insertPosition + 1].delay -= (delay - curSumDelay);
 			}
@@ -158,7 +157,6 @@ void SCH_Add_Task(void (*pFunction)(void), uint32_t delay, uint32_t period)
 			SCH_tasks_G[insertPosition].delay = delay - curSumDelay;
 			SCH_tasks_G[insertPosition].period = period;
 			SCH_tasks_G[insertPosition].pTask = pFunction;
-			SCH_tasks_G[insertPosition].runMe = 0;
 			++numOfTasks;
 		}
 	}

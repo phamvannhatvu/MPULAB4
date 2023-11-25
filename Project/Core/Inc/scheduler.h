@@ -26,10 +26,9 @@ typedef struct
 
 	// Interval (in ticks) between subsequent runs
 	uint32_t period;
-
-	// Incremented (by scheduler) when task is due to execute
-	uint8_t runMe;
 } sTask;
+
+extern uint32_t jitterTimes;
 
 void SCH_Init(void);
 void SCH_Update(void);

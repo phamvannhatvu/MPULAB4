@@ -48,6 +48,7 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
+// Use for display the number of ticks the program has been run
 uint32_t display_counter = 0;
 /* USER CODE END PV */
 
@@ -67,6 +68,7 @@ void print10ms(void);
 void print500ms(void);
 
 void print_time(const char *msg);
+void long_task();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -111,11 +113,11 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   SCH_Init();
-  SCH_Add_Task(LED05_blink, 0, 500);
-  SCH_Add_Task(LED1_blink, 0, 1000);
-  SCH_Add_Task(LED15_blink, 0, 1500);
-  SCH_Add_Task(LED2_blink, 0, 2000);
-  SCH_Add_Task(LED25_blink, 2000, 0);
+  SCH_Add_Task(LED05_blink, 110, 500);
+  SCH_Add_Task(LED1_blink, 130, 1000);
+  SCH_Add_Task(LED15_blink, 170, 1500);
+  SCH_Add_Task(LED2_blink, 190, 2000);
+  SCH_Add_Task(LED25_blink, 2500, 0);
   SCH_Add_Task(print10ms, 2000, 10);
   SCH_Add_Task(print500ms, 2000, 500);
   SCH_Add_Task(read_button, 0, 10);
