@@ -1,0 +1,9 @@
+scheduler.c:12:6:Timer_Init	1
+scheduler.c:17:6:SCH_Report_Status	1
+scheduler.c:22:6:SCH_Go_To_Sleep	1
+scheduler.c:27:6:SCH_Init	2
+scheduler.c:37:6:SCH_Update	5
+scheduler.c:61:6:SCH_Delete_Task	2
+scheduler.c:72:6:SCH_Dispatch_Tasks	4
+scheduler.c:93:6:SCH_Add_Task	4
+scheduler.c:109:6:HAL_TIM_PeriodElapsedCallback	2

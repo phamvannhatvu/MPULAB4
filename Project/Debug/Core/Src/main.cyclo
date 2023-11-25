@@ -1,0 +1,13 @@
+main.c:77:5:main	1
+main.c:132:6:SystemClock_Config	3
+main.c:169:13:MX_TIM2_Init	4
+main.c:214:13:MX_USART1_UART_Init	2
+main.c:247:13:MX_GPIO_Init	1
+main.c:274:6:LED05_blink	1
+main.c:279:6:LED1_blink	1
+main.c:284:6:LED15_blink	1
+main.c:289:6:LED2_blink	1
+main.c:294:6:LED25_blink	1
+main.c:299:6:print10ms	1
+main.c:304:6:print500ms	1
+main.c:314:6:Error_Handler	1
