@@ -20,8 +20,7 @@ typedef struct
 	// Pointer to the task
 	void (*pTask)(void);
 
-	// Delay (in ticks) until the function will (next) be run (from when the
-	// preceding task will be executed)
+	// Delay (in ticks) until the function will (next) be run (after the preceding task or from the current point in time if it is the first task)
 	uint32_t delay;
 
 	// Interval (in ticks) between subsequent runs
@@ -32,8 +31,9 @@ extern uint32_t jitterTimes;
 
 void SCH_Init(void);
 void SCH_Update(void);
-void SCH_Delete_Task(uint8_t);
-void SCH_Add_Task(void (*)(void), uint32_t, uint32_t);
+// 0 means delete successfully
+uint8_t SCH_Delete_Task(uint32_t);
+uint32_t SCH_Add_Task(void (*)(void), uint32_t, uint32_t);
 uint8_t SCH_Find_Task(void (*)(void));
 void SCH_Dispatch_Tasks(void);
 

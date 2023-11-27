@@ -3,8 +3,8 @@ scheduler.c:19:6:SCH_Report_Status	1
 scheduler.c:24:6:SCH_Go_To_Sleep	1
 scheduler.c:29:6:SCH_Init	2
 scheduler.c:39:6:SCH_Update	2
-scheduler.c:51:6:SCH_Delete_Task	4
-scheduler.c:72:6:SCH_Dispatch_Tasks	9
-scheduler.c:114:6:SCH_Add_Task	8
-scheduler.c:166:9:SCH_Find_Task	3
-scheduler.c:180:6:HAL_TIM_PeriodElapsedCallback	2
+scheduler.c:51:9:SCH_Delete_Task	4
+scheduler.c:79:6:SCH_Dispatch_Tasks	9
+scheduler.c:122:10:SCH_Add_Task	8
+scheduler.c:180:9:SCH_Find_Task	3
+scheduler.c:194:6:HAL_TIM_PeriodElapsedCallback	2
